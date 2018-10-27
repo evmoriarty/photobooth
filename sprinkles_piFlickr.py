@@ -70,7 +70,7 @@ def exitApp(channel):
     GPIO.output(ledPin,True);
     time.sleep(3)
     sys.exit()
-         
+
 def isConnected():
 	try:
 		# see if we can resolve the host name -- tells us if there is a DNS listening
@@ -80,18 +80,18 @@ def isConnected():
 		return True
 	except:
 		 pass
-	return False    
+	return False
 
 def initPygame():
     pygame.init()
     size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
     pygame.display.set_caption('Photo Booth Pics')
-    pygame.mouse.set_visible(False) #hide the mouse cursor	
+    pygame.mouse.set_visible(False) #hide the mouse cursor
     return pygame.display.set_mode(size, pygame.FULLSCREEN)
 
 def showImage(imagePath):
     screen = initPygame()
-    img=pygame.image.load(imagePath) 
+    img=pygame.image.load(imagePath)
     img = pygame.transform.scale(img,(monitorWidth,monitorHeight))
     screen.blit(img,(offsetX,offsetY))
     pygame.display.flip()
@@ -112,7 +112,7 @@ def waitForBtn(t=0):
 
 def uploadToFlickr(file,tag):
 	connected = isConnected() #check to see if you have an internet connection
-	while connected: 
+	while connected:
 		try:
 			flickr = flickrapi.FlickrAPI(config.api_key, config.api_secret)
 
@@ -147,14 +147,14 @@ def uploadToFlickr(file,tag):
 			sys.exit(0) # quit Python
 
 
-# define the photo taking function for when the button is pressed 
-def startApp():   
-        
+# define the photo taking function for when the button is pressed
+def startApp():
+
 	#show the instructions
 	GPIO.output(ledPin,False) #turn the light off
 	showImage(realPath + "/slides/intro.png")
 	waitForBtn(prepDelay)
-        
+
 	#get ready to take pics
 	showImage(realPath + "/slides/blank.png")
 	GPIO.output(ledPin,False) #turn the light off
@@ -167,29 +167,29 @@ def startApp():
 		time.sleep(1) #Let the camera warm up
 
 		#iterate the blink of the light in prep, also gives a little time for the camera to warm up
-		GPIO.output(ledPin,True); sleep(.25) 
+		GPIO.output(ledPin,True); sleep(.25)
 		GPIO.output(ledPin,False); sleep(.25)
 		GPIO.output(ledPin,True); sleep(.25)
 
 		waitForBtn(0) #wait for a button press
-	    
-		#take one picture 
+
+		#take one picture
 		now = time.strftime("%Y-%m-%d-%H_%M_%S") #get the current date and time for the start of the filename
 		fileToUpload = config.file_path + now + '.jpg'
-		try: #take the photos                
+		try: #take the photos
 			GPIO.output(ledPin,False) #turn off the LED
 			camera.capture(fileToUpload);
 		finally:
-			camera.stop_preview()				
+			camera.stop_preview()
 			camera.close()
-	
+
 	#show the image
 	showImage(fileToUpload) #show the one image until flickr upload complete
 	time.sleep(replayDelay) #pause for a minimum amount of time
-	
+
 	#upload to flickr
 	uploadToFlickr(fileToUpload,tagsToTag)
-	
+
 	#display final screen
 	showImage(realPath + "/slides/done.png");
 	time.sleep(doneDelay)
@@ -202,9 +202,9 @@ def startApp():
 ### Main Program ###
 ####################
 
-# when a falling edge is detected on btnPin2 and btnPin3, regardless of whatever   
-# else is happening in the program, their function will be run   
-GPIO.add_event_detect(btnPin2, GPIO.FALLING, callback=shutItDown, bouncetime=300) 
+# when a falling edge is detected on btnPin2 and btnPin3, regardless of whatever
+# else is happening in the program, their function will be run
+GPIO.add_event_detect(btnPin2, GPIO.FALLING, callback=shutItDown, bouncetime=300)
 
 #choose one of the two following lines to be un-commented
 GPIO.add_event_detect(btnPin3, GPIO.FALLING, callback=exitApp, bouncetime=300) #use third button to exit python. Good while developing
@@ -215,12 +215,12 @@ files = glob.glob(config.file_path + '*')
 for f in files:
     os.remove(f)
 
-print "Photo booth app running..." 
+print "Photo booth app running..."
 #light up the lights to show the app is running
 j = 1
 while j<4:
 	GPIO.output(ledPin,False);
-	time.sleep(0.25) 
+	time.sleep(0.25)
 	GPIO.output(ledPin,True);
 	time.sleep(0.25)
 	j+=1
