@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# created by chris@drumminhands.com
+# created by @drumminhands, edited by @srgsprinkles
 # see instructions at http://www.drumminhands.com/2015/05/22/raspberry-pi-and-flickr/
 
 import os
