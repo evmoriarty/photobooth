@@ -28,12 +28,12 @@ btnPin3 = 22 # pin for button to end the program, but not shutdown the pi
 
 prepDelay = 1 # number of seconds at step 1 as users prep to have photo taken
 replayDelay = 2 # how long to show the image before uploading to flickr?
-doneDelay = 6 # how long to hold the done screen before restarting the process
+doneDelay = 15 # how long to hold the done screen before restarting the process (in seconds)
 
 testServer = 'www.google.com'
 realPath = os.path.dirname(os.path.realpath(__file__))
 
-tagsToTag = 'photobooth testing'
+tagsToTag = 'BrennanAndElla'
 
 monitorWidth = 1392;
 monitorHeight = 868;
@@ -207,7 +207,7 @@ def startApp():
 	uploadToFlickr(fileToUpload,tagsToTag)
 
 	#display final screen
-	showImage(realPath + "/slides/done.png");
+	showImage(realPath + "/slides/brennan-and-ella-link.jpg");
 	time.sleep(doneDelay)
 
 	#start over
