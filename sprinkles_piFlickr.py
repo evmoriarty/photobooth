@@ -152,8 +152,9 @@ def startApp():
 
 	#show the instructions
 	GPIO.output(ledPin,False) #turn the light off
-	showImage(realPath + "/slides/intro.png")
-	waitForBtn(prepDelay)
+	#showImage(realPath + "/slides/intro.png")
+	#showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
+	#waitForBtn(prepDelay)
 
 	#get ready to take pics
 	showImage(realPath + "/slides/blank.png")
@@ -171,7 +172,22 @@ def startApp():
 		GPIO.output(ledPin,False); sleep(.25)
 		GPIO.output(ledPin,True); sleep(.25)
 
-		waitForBtn(0) #wait for a button press
+                #wait for a button press
+		# waitForBtn(0)
+
+                #countdown 3, 2, 1, and screen flashes
+		sleep(0.5)
+		showImage(realPath + "/slides/countdown3.jpg")
+		camera.stop_preview(); sleep(0.5)
+		camera.start_preview(); sleep(0.5)
+		showImage(realPath + "/slides/countdown2.jpg")
+		camera.stop_preview(); sleep(0.5)
+		camera.start_preview(); sleep(0.5)
+		showImage(realPath + "/slides/countdown1.jpg")
+		camera.stop_preview(); sleep(0.5)
+		camera.start_preview(); sleep(0.5)
+		showImage(realPath + "/slides/white.jpg")
+		camera.stop_preview(); sleep(0.5)
 
 		#take one picture
 		now = time.strftime("%Y-%m-%d-%H_%M_%S") #get the current date and time for the start of the filename
@@ -196,7 +212,7 @@ def startApp():
 
 	#start over
 	GPIO.output(ledPin,True) #turn on the LED
-	showImage(realPath + "/slides/attract.png");
+        showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
 
 ####################
 ### Main Program ###
@@ -225,7 +241,7 @@ while j<4:
 	time.sleep(0.25)
 	j+=1
 
-showImage(realPath + "/slides/attract.png");
+showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
 
 while True:
 	GPIO.wait_for_edge(btnPin1, GPIO.FALLING)

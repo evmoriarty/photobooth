@@ -5,18 +5,18 @@ file_path = '/home/pi/photobooth/pics/' # path to save images
 #############
 ## STEP 1 ###
 #############
-#First, enter the API_KEY and API_SECRET below. 
+#First, enter the API_KEY and API_SECRET below.
 #The api_key and api_secret can be obtained from http://www.flickr.com/services/api/keys/
-api_key = u'c79a0d7444d38feab70d80bae94d612e'
-api_secret = u'2a4ccbbef8956a32'
+api_key = u'12ce076a34a416b34d646a5cdcb630a0'
+api_secret = u'e9668b547fcf7523'
 
 #############
 ## STEP 2 ###
 #############
 #Then, run the following line of code in a terminal window: sudo python auth.py
 #It will open a browser window and ask you to authorize on yahoo/flickr
-#Go ahead and authorize. The result will be a page with a number. 
-#Type that number into the terminal session and press enter. 
+#Go ahead and authorize. The result will be a page with a number.
+#Type that number into the terminal session and press enter.
 
 #If all goes well, you should have a new image in your Flickr feed.
 
