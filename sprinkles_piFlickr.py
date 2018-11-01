@@ -16,6 +16,7 @@ import pygame
 import config
 import flickrapi
 import webbrowser
+from pymouse import PyMouseEvent
 from signal import alarm, signal, SIGALRM, SIGKILL
 
 ########################
@@ -49,6 +50,21 @@ GPIO.setup(ledPin,GPIO.OUT) # LED 1
 GPIO.setup(btnPin1, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 1
 GPIO.setup(btnPin2, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 2
 GPIO.setup(btnPin3, GPIO.IN, pull_up_down=GPIO.PUD_UP) # falling edge detection on button 3
+
+#################
+#### Classes ####
+#################
+
+class Clickonacci(PyMouseEvent):
+    def __init__(self):
+        PyMouseEvent.__init__(self)
+
+    def click(self, x, y, button, press):
+        '''Print Fibonacci numbers when the left click is pressed.'''
+        if button == 1:
+		if press:
+			print('Clicked!')
+			startApp()
 
 #################
 ### Functions ###
@@ -86,7 +102,7 @@ def initPygame():
     pygame.init()
     size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
     pygame.display.set_caption('Photo Booth Pics')
-    pygame.mouse.set_visible(False) #hide the mouse cursor
+    #pygame.mouse.set_visible(False) #hide the mouse cursor
     return pygame.display.set_mode(size, pygame.FULLSCREEN)
 
 def showImage(imagePath):
@@ -242,8 +258,12 @@ while j<4:
 	j+=1
 
 showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
+#start the mouse click event detection
+C = Clickonacci()
+C.run()
 
-while True:
-	GPIO.wait_for_edge(btnPin1, GPIO.FALLING)
-	time.sleep(0.2) #debounce
-	startApp()
+
+#while True:
+#	GPIO.wait_for_edge(btnPin1, GPIO.FALLING)
+#	time.sleep(0.2) #debounce
+#	startApp()
