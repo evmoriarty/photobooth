@@ -1,5 +1,6 @@
 import os
 import time
+import glob
 from tkinter import *
 import tkinter.font
 
@@ -88,7 +89,7 @@ def uploadToFlickr(file,tag):
                 file.close()
             except:
                 print('Something went wrong. Could not write file.')
-                sys.exit(0) # quit Python
+            sys.exit(0) # quit Python
 
 def startApp():
     # show the instructions
@@ -98,44 +99,44 @@ def startApp():
 
     # get ready to take pictures
     showImage(realPath + "/slides/blank.png")
-    
+
     with picamera.PiCamera() as camera: # use the 'with' for faster image taking
         camera.resolution = (monitorWidth, monitorHeight)
-	camera.framerate = 30 # adjusting the framerate affects the preview image quality. Careful.
-	camera.vflip = True
-	camera.hflip = False
-	camera.start_preview()
-	time.sleep(1) # Let the camera warm up
-
+        camera.framerate = 30 # adjusting the framerate affects the preview image quality. Careful.
+        camera.vflip = True
+        camera.hflip = False
+        camera.start_preview()
+        time.sleep(1) # Let the camera warm up
+        
         # countdown 3, 2, 1, and screen flashes
-	sleep(0.5)
-	showImage(realPath + "/slides/countdown3.jpg")
-	camera.stop_preview()
-	sleep(0.5)
-	camera.start_preview()
-	sleep(0.5)
-	showImage(realPath + "/slides/countdown2.jpg")
-	camera.stop_preview()
-	sleep(0.5)
-	camera.start_preview()
-	sleep(0.5)
-	showImage(realPath + "/slides/countdown1.jpg")
-	camera.stop_preview()
-	sleep(0.5)
-	camera.start_preview()
-	sleep(0.5)
-	showImage(realPath + "/slides/white.jpg")
-	camera.stop_preview()
-	sleep(0.5)
+        sleep(0.5)
+        showImage(realPath + "/slides/countdown3.jpg")
+        camera.stop_preview()
+        sleep(0.5)
+        camera.start_preview()
+        sleep(0.5)
+        showImage(realPath + "/slides/countdown2.jpg")
+        camera.stop_preview()
+        sleep(0.5)
+        camera.start_preview()
+        sleep(0.5)
+        showImage(realPath + "/slides/countdown1.jpg")
+        camera.stop_preview()
+        sleep(0.5)
+        camera.start_preview()
+        sleep(0.5)
+        showImage(realPath + "/slides/white.jpg")
+        camera.stop_preview()
+        sleep(0.5)
 
-	# take one picture
-	now = time.strftime("%Y-%m-%d-%H_%M_%S") # get the current date and time for the start of the filename
-	fileToUpload = config.file_path + now + ".jpg"
-	try: # take the photos
-            camera.capture(fileToUpload)
-	finally:
-            camera.stop_preview()
-            camera.close()
+        # take one picture
+        now = time.strftime("%Y-%m-%d-%H_%M_%S") # get the current date and time for the start of the filename
+        fileToUpload = config.file_path + now + ".jpg"
+        try: # take the photos
+                camera.capture(fileToUpload)
+        finally:
+                camera.stop_preview()
+                camera.close()
 
     # show the image
     showImage(fileToUpload) # show the one image until flickr upload complete
@@ -173,6 +174,3 @@ captureBtn.grid(row=1, column=1)
 
 win.protocol("WM_DELETE_WINDOW", exitApp) # exit cleanly
 win.mainloop() # Loop forever
-
-#if __name__ == '__main__':
-#    main()
