@@ -1,8 +1,15 @@
 import os
+import sys
 import time
-import glob
+from time import sleep
 from tkinter import *
 import tkinter.font
+import picamera
+import socket
+import config
+import flickrapi
+import webbrowser
+from signal import alarm, signal, SIGALRM, SIGKILL
 
 #################
 ### VARIABLES ###
