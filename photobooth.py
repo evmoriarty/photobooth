@@ -98,7 +98,10 @@ def startApp():
     #showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
 
     # get ready to take pictures
-    showImage(realPath + "/slides/blank.png")
+    congratsLabel.grid_remove() # use .grid() to add them back
+    captureBtn.grid_remove()
+    blankScreen = Label(win, bg="#000000")
+    blankScreen.grid(row=0, column=1, sticky=W+E+N+S)
 
     with picamera.PiCamera() as camera: # use the 'with' for faster image taking
         camera.resolution = (monitorWidth, monitorHeight)
@@ -107,25 +110,37 @@ def startApp():
         camera.hflip = False
         camera.start_preview()
         time.sleep(1) # Let the camera warm up
-        
-        # countdown 3, 2, 1, and screen flashes
+
+        # countdown from 3, 2, 1 then the screen flashes white and takes picture
         sleep(0.5)
-        showImage(realPath + "/slides/countdown3.jpg")
+        #showImage(realPath + "/slides/countdown3.jpg")
+        blankScreen.grid_remove()
+        countdown3 = Label(win, text="3", font=myFont, fg="#ffffff", bg="#000000")
+        countdown3.grid(row=0, column=1, sticky=W+E+N+S)
         camera.stop_preview()
         sleep(0.5)
         camera.start_preview()
         sleep(0.5)
-        showImage(realPath + "/slides/countdown2.jpg")
+        #showImage(realPath + "/slides/countdown2.jpg")
+        countdown3.grid_remove()
+        countdown2 = Label(win, text="2", font=myFont, fg="#ffffff", bg="#000000")
+        countdown2.grid(row=0, column=1, sticky=W+E+N+S)
         camera.stop_preview()
         sleep(0.5)
         camera.start_preview()
         sleep(0.5)
-        showImage(realPath + "/slides/countdown1.jpg")
+        #showImage(realPath + "/slides/countdown1.jpg")
+        countdown2.grid_remove()
+        countdown1 = Label(win, text="1", font=myFont, fg="#ffffff", bg="#000000")
+        countdown1.grid(row=0, column=1, sticky=W+E+N+S)
         camera.stop_preview()
         sleep(0.5)
         camera.start_preview()
         sleep(0.5)
-        showImage(realPath + "/slides/white.jpg")
+        countdown1.grid_remove()
+        #showImage(realPath + "/slides/white.jpg")
+        whiteScreen = Label(win, bg="#ffffff")
+        whiteScreen.grid(row=0, column=1, sticky=W+E+N+S)
         camera.stop_preview()
         sleep(0.5)
 
@@ -139,14 +154,22 @@ def startApp():
                 camera.close()
 
     # show the image
-    showImage(fileToUpload) # show the one image until flickr upload complete
+    #showImage(fileToUpload) # show the one image until flickr upload complete
+    whiteScreen.grid_remove()
+    showCapturedImg = PhotoImage(file=fileToUpload)
+    showCapturedImg.grid(row=0, column=1, sticky=W+E+N+S)
     time.sleep(replayDelay) # pause for a minimum amount of time
 
     # upload to flickr
     uploadToFlickr(fileToUpload,tagsToTag)
 
     # display final screen
-    showImage(realPath + "/slides/brennan-and-ella-link.jpg")
+    #showImage(realPath + "/slides/brennan-and-ella-link.jpg")
+    showCapturedImg.grid_remove()
+    lookHereLabel = Label(win, text="Look at your photo here:", fg="#ffffff")
+    lookHereLabel.grid(row=0, column=1, sticky=W+E+N+S)
+    linkLabel = Label(win, text="flickr.com/photos/brennan_ella_gray")
+    linkLabel.grid(row=1, column=1, sticky=W+E+N+S)
     time.sleep(doneDelay)
 
     # start over
@@ -159,6 +182,8 @@ def startApp():
 win = Tk()
 win.geometry("800x480")
 win.title("Photobooth")
+win.protocol("WM_DELETE_WINDOW", exitApp) # exit cleanly
+win.mainloop() # Loop forever
 
 myFont = tkinter.font.Font(family="Helvetica", size=12, weight="bold")
 
@@ -166,11 +191,8 @@ myFont = tkinter.font.Font(family="Helvetica", size=12, weight="bold")
 #############
 ## WIDGETS ##
 #############
-congratsLabel = Label(win, text="Congratulation Brennan and Ella Gray", font=myFont, fg="#ffffff", bg="#00a775", height=5, width=89)
-congratsLabel.grid(row=0, column=1)
+congratsLabel = Label(win, text="Congratulation Brennan and Ella Gray", font=myFont, fg="#ffffff", bg="#00a775")
+congratsLabel.grid(row=0, column=1, sticky=W+E+N+S) # for centering, look at the .grid() documentation
 
-captureBtn = Button(win, text="Tap here to begin", font=myFont, command=takeSnapshot, fg="#ffffff", bg="#e82c0c", height=10, width=30)
-captureBtn.grid(row=1, column=1)
-
-win.protocol("WM_DELETE_WINDOW", exitApp) # exit cleanly
-win.mainloop() # Loop forever
+captureBtn = Button(win, text="Tap here to begin", font=myFont, command=takeSnapshot, fg="#ffffff", bg="#e82c0c")
+captureBtn.grid(row=1, column=1, sticky=W+E+N+S)
