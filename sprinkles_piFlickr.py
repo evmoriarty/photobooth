@@ -36,8 +36,10 @@ realPath = os.path.dirname(os.path.realpath(__file__))
 
 tagsToTag = 'BrennanAndElla'
 
-monitorWidth = 1392;
-monitorHeight = 868;
+#monitorWidth = 1392;
+#monitorHeight = 868;
+monitorWidth = 720;
+monitorHeight = 480;
 
 offsetX = 0 # how far off to left corner to display photos
 offsetY = 0 # how far off to left corner to display photos
@@ -60,10 +62,9 @@ class Clickonacci(PyMouseEvent):
         PyMouseEvent.__init__(self)
 
     def click(self, x, y, button, press):
-        '''Print Fibonacci numbers when the left click is pressed.'''
+        # Start app when the left click is pressed.
         if button == 1:
 		if press:
-			print('Clicked!')
 			startApp()
 
 #################
@@ -81,7 +82,8 @@ def shutItDown(channel):
 	time.sleep(3)
 	os.system("sudo halt")
 
-def exitApp(channel):
+#def exitApp(channel):
+def exitApp():
     print "Photo booth app ended. RPi still running" 
     GPIO.output(ledPin,True);
     time.sleep(3)
@@ -167,14 +169,14 @@ def uploadToFlickr(file,tag):
 def startApp():
 
 	#show the instructions
-	GPIO.output(ledPin,False) #turn the light off
+	#GPIO.output(ledPin,False) #turn the light off
 	#showImage(realPath + "/slides/intro.png")
 	#showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
 	#waitForBtn(prepDelay)
 
 	#get ready to take pics
 	showImage(realPath + "/slides/blank.png")
-	GPIO.output(ledPin,False) #turn the light off
+	#GPIO.output(ledPin,False) #turn the light off
 	with picamera.PiCamera() as camera: #use the 'with' for faster image taking
 		camera.resolution = (monitorWidth, monitorHeight)
 		camera.framerate = 30 #adjusting the framerate affects the preview image quality. Careful.
@@ -184,9 +186,9 @@ def startApp():
 		time.sleep(1) #Let the camera warm up
 
 		#iterate the blink of the light in prep, also gives a little time for the camera to warm up
-		GPIO.output(ledPin,True); sleep(.25)
-		GPIO.output(ledPin,False); sleep(.25)
-		GPIO.output(ledPin,True); sleep(.25)
+		#GPIO.output(ledPin,True); sleep(.25)
+		#GPIO.output(ledPin,False); sleep(.25)
+		#GPIO.output(ledPin,True); sleep(.25)
 
                 #wait for a button press
 		# waitForBtn(0)
@@ -209,7 +211,7 @@ def startApp():
 		now = time.strftime("%Y-%m-%d-%H_%M_%S") #get the current date and time for the start of the filename
 		fileToUpload = config.file_path + now + '.jpg'
 		try: #take the photos
-			GPIO.output(ledPin,False) #turn off the LED
+			#GPIO.output(ledPin,False) #turn off the LED
 			camera.capture(fileToUpload);
 		finally:
 			camera.stop_preview()
@@ -226,8 +228,10 @@ def startApp():
 	showImage(realPath + "/slides/brennan-and-ella-link.jpg");
 	time.sleep(doneDelay)
 
+        exitApp()
+
 	#start over
-	GPIO.output(ledPin,True) #turn on the LED
+	#GPIO.output(ledPin,True) #turn on the LED
         showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
 
 ####################
@@ -240,7 +244,6 @@ GPIO.add_event_detect(btnPin2, GPIO.FALLING, callback=shutItDown, bouncetime=300
 
 #choose one of the two following lines to be un-commented
 GPIO.add_event_detect(btnPin3, GPIO.FALLING, callback=exitApp, bouncetime=300) #use third button to exit python. Good while developing
-#GPIO.add_event_detect(btnPin3, GPIO.FALLING, callback=clear_pics, bouncetime=300) #use the third button to clear pics stored on the SD card from previous events
 
 # delete files in folder on startup
 files = glob.glob(config.file_path + '*')
@@ -249,15 +252,16 @@ for f in files:
 
 print "Photo booth app running..."
 #light up the lights to show the app is running
-j = 1
-while j<4:
-	GPIO.output(ledPin,False);
-	time.sleep(0.25)
-	GPIO.output(ledPin,True);
-	time.sleep(0.25)
-	j+=1
+#j = 1
+#while j<4:
+#	GPIO.output(ledPin,False);
+#	time.sleep(0.25)
+#	GPIO.output(ledPin,True);
+#	time.sleep(0.25)
+#	j+=1
 
 showImage(realPath + "/slides/brennan-and-ella-congrats.jpg")
+
 #start the mouse click event detection
 C = Clickonacci()
 C.run()
