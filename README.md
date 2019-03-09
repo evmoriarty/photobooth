@@ -11,7 +11,7 @@ This requires:
   - GraphicsMagick -- http://www.graphicsmagick.org/ (This is optional)
   - flickrapi - http://stuvel.eu/media/flickrapi-docs/documentation/
   
-Quick set instructions:
+## Quick set instructions:
 
 0) Wire up the button and LED, then run testcircuit.py to check the wiring.
 
@@ -23,4 +23,8 @@ Quick set instructions:
 
 4) Check that the test image was uploaded to your Flickr site
 
-5) Run drumminhands_piFlickr.py. Consider making this autostart when the Raspberry Pi starts up.
+5) Run sprinkles_piFlickr.py. Consider making this autostart when the Raspberry Pi starts up.
+
+## Images of the final product
+![https://i.imgur.com/haGNVcc.jpg](raspberrypi-1)
+![https://i.imgur.com/4pWLhGS.jpg](raspberrypi-2)
