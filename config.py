@@ -7,8 +7,8 @@ file_path = '/home/pi/photobooth/pics/' # path to save images
 #############
 #First, enter the API_KEY and API_SECRET below.
 #The api_key and api_secret can be obtained from http://www.flickr.com/services/api/keys/
-api_key = u'12ce076a34a416b34d646a5cdcb630a0'
-api_secret = u'e9668b547fcf7523'
+api_key = u'enter_your_api_key_here'
+api_secret = u'enter_your_api_secret_here'
 
 #############
 ## STEP 2 ###
