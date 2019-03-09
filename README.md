@@ -26,5 +26,5 @@ This requires:
 5) Run sprinkles_piFlickr.py. Consider making this autostart when the Raspberry Pi starts up.
 
 ## Images of the final product
-![https://i.imgur.com/haGNVcc.jpg](raspberrypi-1)
-![https://i.imgur.com/4pWLhGS.jpg](raspberrypi-2)
+![raspberrypi-1](https://i.imgur.com/haGNVcc.jpg)
+![raspberrypi-2](https://i.imgur.com/4pWLhGS.jpg)
